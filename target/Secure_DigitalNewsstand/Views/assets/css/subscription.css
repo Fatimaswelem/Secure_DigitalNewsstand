@@ -1,0 +1,66 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.plans-container {
+    padding: 4rem 2rem;
+    background: #f9fafb;
+    text-align: center;
+}
+
+.plans {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.plan-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 280px;
+}
+
+.price {
+    font-size: 2rem;
+    color: #cc7284; /* Updated Price Color */
+    margin-bottom: 1.5rem;
+}
+
+.price span {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+.select-button {
+    background: #cc7284; /* Normal Dusty Rose */
+    color: white;
+    border: none;
+    height: 36px; /* Updated smaller height */
+    width: 100%;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.select-button:hover {
+    background: #520a18; /* Hover Dark Maroon */
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    color: #4b5563;
+    text-align: left;
+}
+
+.features li {
+    margin-bottom: 0.75rem;
+}

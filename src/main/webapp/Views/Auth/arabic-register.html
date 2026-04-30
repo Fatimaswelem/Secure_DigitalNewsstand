@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/register.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Digital Platform</div>
+            <div class="nav-links">
+                <a href="arabic-register.html" class="active">العربية</a>
+                <a href="register.html">English</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="register-container">
+        <div class="register-box">
+            <h2>إنشاء حساب</h2>
+            <div id="errorMsg" class="error-message" style="display:none;"></div>
+            <form class="register-form" id="registerForm">
+                <div class="form-group">
+                    <label for="name">اسم المستخدم</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="language">اللغة المفضلة</label>
+                    <select id="language" name="language" required>
+                        <option value="" disabled selected>اختر لغة</option>
+                        <option value="1">الإنجليزية</option>
+                        <option value="2">العربية</option>
+                        <option value="3">الفرنسية</option>
+                        <option value="4">الإسبانية</option>
+                        <option value="5">الألمانية</option>
+                        <option value="6">الصينية</option>
+                        <option value="7">اليابانية</option>
+                        <option value="8">الكورية</option>
+                        <option value="9">الروسية</option>
+                        <option value="10">البرتغالية</option>
+                        <option value="11">الإيطالية</option>
+                        <option value="12">الهندية</option>
+                        <option value="13">التركية</option>
+                        <option value="14">الفارسية</option>
+                        <option value="15">الأردية</option>
+                        <option value="16">الهولندية</option>
+                    </select>
+                </div>
+                <button type="submit" class="register-button">تسجيل</button>
+            </form>
+            <div class="login-link">
+                <p>لديك حساب بالفعل؟ <a href="arabic-login.html">سجّل الدخول هنا</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Digital Platform. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name       = document.getElementById('name').value.trim();
+            const email      = document.getElementById('email').value.trim();
+            const password   = document.getElementById('password').value;
+            const languageId = parseInt(document.getElementById('language').value);
+            const errorDiv   = document.getElementById('errorMsg');
+            errorDiv.style.display = 'none';
+
+            if (password.length < 8) {
+                errorDiv.textContent = 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.';
+                errorDiv.style.display = 'block';
+                return;
+            }
+            try {
+                const response = await fetch('/Secure_DigitalNewsstand/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ userName: name, userEmail: email, userPassword: password, languageId })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    window.location.href = '../Client/subscription.html';
+                } else {
+                    errorDiv.textContent = data.error || 'فشل التسجيل. حاول مجدداً.';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (err) {
+                errorDiv.textContent = 'تعذر الاتصال بالخادم. حاول مجدداً.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/favorites.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links">
+            <a href="sections.html">Sections</a>
+            <a href="subscription.html">Plans</a>
+            <a href="favorites.html" class="active">Favorites</a>
+            <a href="games.html">Games</a>
+            <a href="account.html">My Account</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<main class="favorites-container">
+    <h1 class="page-title">Favorites</h1>
+
+    <div class="favorites-tabs">
+        <button class="tab-btn active" data-tab="articles">Saved Articles</button>
+        <button class="tab-btn" data-tab="sections">Followed Sections</button>
+    </div>
+
+    <div class="tab-content active" id="articles">
+        <div class="saved-articles-grid">
+            <!-- Dynamically loaded from backend -->
+        </div>
+    </div>
+
+    <div class="tab-content" id="sections">
+        <div class="favorite-sections-grid">
+            <!-- Dynamically loaded from backend -->
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+
+<script>
+    // Logout handler (unchanged)
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch('/Secure_DigitalNewsstand/auth/logout', { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+</script>
+<script src="../assets/js/favorites.js"></script>
+</body>
+</html>

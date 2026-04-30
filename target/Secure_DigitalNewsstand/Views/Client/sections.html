@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Sections - Digital Platform</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/sections.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links">
+            <a href="sections.html" class="active">Sections</a>
+            <a href="subscription.html">Plans</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="games.html">Games</a>
+            <a href="account.html">My Account</a>
+            <span id="greetingUser" style="color:#333537; font-weight:600;"></span>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<main class="sections-container">
+    <h1 class="page-title">Explore Sections</h1>
+    <p class="page-subtitle">Follow topics to personalize your experience</p>
+
+    <div class="sections-grid" id="sectionsGrid"></div>
+
+    <section class="trending-topics">
+        <h2>Trending Topics</h2>
+        <div class="topics-grid" id="topicsGrid"></div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+
+<script>
+    const BASE = '/Secure_DigitalNewsstand';
+
+    // ── Auth guard ─────────────────────────────────────────────────────────
+    (async () => {
+        try {
+            const res  = await fetch(`${BASE}/auth/me`, { credentials: 'include' });
+            if (!res.ok) { window.location.href = '../Auth/index.html'; return; }
+            const user = await res.json();
+            document.getElementById('greetingUser').textContent = 'Hello, ' + user.userName;
+        } catch {
+            window.location.href = '../Auth/index.html';
+        }
+    })();
+
+    // ── Logout ─────────────────────────────────────────────────────────────
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch(`${BASE}/auth/logout`, { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+</script>
+<script src="../assets/js/sections.js"></script>
+</body>
+</html>

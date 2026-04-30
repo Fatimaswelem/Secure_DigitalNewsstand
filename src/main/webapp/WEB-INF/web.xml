@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>Digital Newsstand</display-name>
+
+    <!-- ── Session config ──────────────────────────────────────────────── -->
+    <session-config>
+        <session-timeout>30</session-timeout>   <!-- minutes -->
+        <cookie-config>
+            <http-only>true</http-only>          <!-- XSS protection -->
+            <secure>true</secure>                <!-- HTTPS only in production -->
+            <same-site>Strict</same-site>        <!-- CSRF protection -->
+        </cookie-config>
+    </session-config>
+
+    <!-- ── Security constraints ────────────────────────────────────────── -->
+    <!-- Force HTTPS in production; remove transport-guarantee for local dev -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secure Area</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <!-- ── Welcome file ─────────────────────────────────────────────────── -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

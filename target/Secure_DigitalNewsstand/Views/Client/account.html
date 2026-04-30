@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/account.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links">
+            <a href="sections.html">Sections</a>
+            <a href="subscription.html">Plans</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="games.html">Games</a>
+            <a href="account.html" class="active">My Account</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<main class="account-container">
+    <div class="account-card">
+        <h2 id="roleMessage"></h2>
+        <div id="planDetails" style="display:none; margin-top: 1.5rem;">
+            <h3>Your Plan Features</h3>
+            <ul id="featuresList"></ul>
+        </div>
+        <a href="subscription.html" class="upgrade-btn" id="upgradeBtn">Change Plan</a>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+
+<script>
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch('/Secure_DigitalNewsstand/auth/logout', { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+</script>
+<script src="../assets/js/account.js"></script>
+</body>
+</html>

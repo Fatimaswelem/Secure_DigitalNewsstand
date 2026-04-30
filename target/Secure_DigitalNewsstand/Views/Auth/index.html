@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/index.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Digital Platform</div>
+            <div class="nav-links">
+                <a href="arabic-login.html">العربية</a>
+                <a href="index.html" class="active">English</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <div id="errorMsg" class="error-message" style="display:none;"></div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember"> Remember Me
+                    </label>
+                    <a href="forget.html" class="forgot-password">Forgot Password?</a>
+                </div>
+                <button class="login-button" type="submit">Login</button>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="register.html">Create a New Account</a></p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Digital Platform. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email    = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/Secure_DigitalNewsstand/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',   // send/receive session cookie
+                    body: JSON.stringify({ userEmail: email, userPassword: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Redirect based on role:  1 = admin,  2 = regular,  3 = premium
+                    if (data.userRole === 1) {
+                        window.location.href = '../Admin/admin.html';
+                    } else {
+                        window.location.href = '../Client/account.html';
+                    }
+                } else {
+                    errorDiv.textContent = data.error || 'Invalid email or password.';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (err) {
+                errorDiv.textContent = 'Could not connect to the server. Please try again.';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

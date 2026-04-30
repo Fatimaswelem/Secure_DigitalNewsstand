@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome! - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/finish.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links"><a href="#" id="logoutBtn">Logout</a></div>
+    </nav>
+</header>
+
+<div class="checkout-panel">
+    <div class="panel-body">
+        <h2 class="title">Checkout here!</h2>
+        <div class="progress-bar">
+            <div class="step active"></div>
+            <div class="step active"></div>
+            <div class="step active"></div>
+            <div class="step active"></div>
+        </div>
+        <div class="info">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 16 16" fill="#cc7284">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </svg>
+            <h1>Welcome to our family!!</h1>
+            <p>Enjoy full access to our features and explore all the exclusive content we've prepared for you.</p>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a href="favorites.html"><button class="btn next-btn">Go to Home</button></a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+
+<script>
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch('/Secure_DigitalNewsstand/auth/logout', { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+</script>
+</body>
+</html>

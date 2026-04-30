@@ -1,0 +1,13 @@
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/controllers/AdminController.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/controllers/AuthController.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/controllers/CategoryController.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/controllers/FavoriteSectionsController.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/controllers/PromoValidationController.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/controllers/SubscriptionController.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/database/DBManager.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/filters/AuthFilter.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/models/Role.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/models/User.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/security/PasswordSecurity.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/security/RBACManager.java
+/Users/fatimaswelem/Documents/Secure_DigitalNewsstand/src/main/java/com/newsstand/utils/AuditLogger.java

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/games.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links">
+            <a href="sections.html">Sections</a>
+            <a href="subscription.html">Plans</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="games.html" class="active">Games</a>
+            <a href="account.html">My Account</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+</header>
+
+
+
+
+    <main class="sections-container">
+        <h1 class="page-title">Games</h1>
+        
+       
+
+        <div class="sections-grid">
+            <div class="section-card">
+                <div class="section-icon">♟️</div>
+                <h3>Chess</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://www.chess.com/play/computer" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">⌛️</div>
+                <h3>Draw&guess</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://skribbl.io/" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">🎨</div>
+                <h3>Quickdraw</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://quickdraw.withgoogle.com/" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">♠️♥️</div>
+                <h3>Solitaired</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://solitaired.com/" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">🐍 </div>
+                <h3>Snake</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://slither.io/" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">❌⭕️</div>
+                <h3>Tic Tac Toe</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://playtictactoe.org/" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">💣</div>
+                <h3>Minesweeper</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://minesweeperonline.com/" class="explore-btn">Play</a>
+            </div>
+            <div class="section-card">
+                <div class="section-icon">🚢</div>
+                <h3>Battleship</h3>
+                <p>Enjoy fun and classic games !</p>
+                <span class="article-count"></span>
+                <a href="https://papergames.io/en/battleship" class="explore-btn">Play</a>
+            </div>
+        </div>
+
+    </main>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+<script>
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch('/Secure_DigitalNewsstand/auth/logout', { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+</script>
+</body>
+</html>
