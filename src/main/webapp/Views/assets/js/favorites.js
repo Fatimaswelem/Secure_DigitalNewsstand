@@ -1,3 +1,5 @@
+// favorites.js – debug version (logs everything)
+
 document.addEventListener('DOMContentLoaded', function () {
     // Tab switching
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -9,12 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Load content from backend
     loadSavedArticles();
     loadFollowedSections();
 });
 
-// ── Saved Articles ───────────────────────────────────────────────────────
 async function loadSavedArticles() {
     const grid = document.querySelector('#articles .saved-articles-grid');
     if (!grid) return;
@@ -46,12 +46,10 @@ async function loadSavedArticles() {
             </div>
         `).join('');
 
-        // Attach remove handlers
         document.querySelectorAll('#articles .remove-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 const articleId = this.dataset.id;
                 const card = this.closest('.article-card');
-                // Send DELETE to backend
                 fetch(`/Secure_DigitalNewsstand/api/favorites/articles?articleId=${articleId}`, {
                     method: 'DELETE',
                     credentials: 'include'
@@ -65,7 +63,6 @@ async function loadSavedArticles() {
     }
 }
 
-// ── Followed Sections ─────────────────────────────────────────────────────
 async function loadFollowedSections() {
     const grid = document.querySelector('#sections .favorite-sections-grid');
     if (!grid) return;
@@ -76,6 +73,7 @@ async function loadFollowedSections() {
         });
         if (!res.ok) throw new Error('Not available');
         const sections = await res.json();
+        console.log("Loaded followed sections:", sections);
 
         if (sections.length === 0) {
             grid.innerHTML = '<p style="text-align:center; color:#888;">No followed sections yet.</p>';
@@ -91,19 +89,36 @@ async function loadFollowedSections() {
             </div>
         `).join('');
 
-        // Attach unfollow handlers
-        document.querySelectorAll('#sections .unfollow-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const sectionId = this.dataset.id;
-                const card = this.closest('.section-card');
-                fetch('/Secure_DigitalNewsstand/api/favorites/sections', {
-                    method: 'POST',   // or DELETE, adjust to your backend
+        // Event delegation on the whole grid
+        grid.addEventListener('click', async function (e) {
+            const btn = e.target.closest('.unfollow-btn');
+            if (!btn) return;
+
+            const sectionId = parseInt(btn.dataset.id, 10);
+            const card = btn.closest('.section-card');
+            console.log("Unfollow clicked, sectionId =", sectionId);
+
+            try {
+                const res = await fetch('/Secure_DigitalNewsstand/api/favorites/sections', {
+                    method: 'POST',
                     credentials: 'include',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sectionId, action: 'unfollow' })
+                    body: JSON.stringify({ sectionId: sectionId, action: 'unfollow' })
                 });
-                if (card) card.remove();
-            });
+
+                console.log("Unfollow response status:", res.status);
+                if (res.ok) {
+                    console.log("Unfollow success, removing card");
+                    if (card) card.remove();
+                } else {
+                    const err = await res.json();
+                    console.error("Unfollow failed:", err);
+                    alert('Failed to unfollow: ' + (err.error || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error("Network error:", err);
+                alert('Network error. Please try again.');
+            }
         });
 
     } catch (err) {

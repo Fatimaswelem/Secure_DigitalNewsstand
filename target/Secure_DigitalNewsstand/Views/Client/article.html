@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/article.css">
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links">
+            <a href="sections.html">Sections</a>
+            <a href="subscription.html">Plans</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="games.html">Games</a>
+            <a href="account.html">My Account</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<main class="article-container" id="articleContainer">
+</main>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+
+<script>
+    const BASE = '/Secure_DigitalNewsstand';
+
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch(`${BASE}/auth/logout`, { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+
+    const id = new URLSearchParams(window.location.search).get('id');
+    if (id) {
+        fetch(`${BASE}/api/articles/${id}`, { credentials: 'include' })
+            .then(res => {
+                if (!res.ok) throw new Error('Article not found');
+                return res.json();
+            })
+            .then(article => {
+                document.getElementById('articleContainer').innerHTML = `
+                    <h1>${article.title}</h1>
+                    <img src="${article.imageUrl}" alt="" style="max-width:100%; margin: 1.5rem 0; border-radius: 0.5rem;">
+                    <p class="article-meta">
+                        <strong>Category:</strong> ${article.categoryName || 'Uncategorized'} |
+                        <strong>Language:</strong> ${article.languageName || 'Unknown'} |
+                        <strong>Author:</strong> ${article.author}
+                        <br><small>${new Date(article.createdAt).toLocaleDateString()}</small>
+                    </p>
+                    <div class="article-body">${article.content}</div>
+                `;
+            })
+            .catch(err => {
+                document.getElementById('articleContainer').innerHTML = '<p>Could not load article.</p>';
+            });
+    }
+</script>
+</body>
+</html>

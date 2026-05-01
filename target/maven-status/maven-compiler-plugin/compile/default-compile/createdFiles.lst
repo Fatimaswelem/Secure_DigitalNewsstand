@@ -1,12 +1,14 @@
 com/newsstand/database/DBManager.class
 com/newsstand/utils/AuditLogger.class
 com/newsstand/security/RBACManager$Permission.class
+com/newsstand/controllers/ArticleController.class
 com/newsstand/controllers/AdminController.class
 com/newsstand/models/User.class
 com/newsstand/filters/AuthFilter.class
 com/newsstand/models/Role.class
 com/newsstand/security/PasswordSecurity.class
 com/newsstand/controllers/FavoriteSectionsController.class
+com/newsstand/controllers/LanguageController.class
 com/newsstand/controllers/AuthController.class
 com/newsstand/controllers/PromoValidationController.class
 com/newsstand/controllers/CategoryController.class

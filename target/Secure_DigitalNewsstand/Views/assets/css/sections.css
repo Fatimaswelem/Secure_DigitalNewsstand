@@ -72,6 +72,7 @@ body {
     cursor: pointer;
     font-size: 0.85rem;
     transition: background 0.25s, color 0.25s;
+    min-width: 140px;
 }
 
 .follow-btn:hover {

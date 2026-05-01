@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - Digital Newsstand</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/favorites.css">  <!-- reuse card styles -->
+</head>
+<body>
+<header>
+    <nav>
+        <div class="logo">Digital Platform</div>
+        <div class="nav-links">
+            <a href="sections.html">Sections</a>
+            <a href="subscription.html">Plans</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="games.html">Games</a>
+            <a href="account.html">My Account</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+</header>
+
+<main class="favorites-container">   <!-- reuse existing container styles -->
+    <h2 id="categoryTitle">Articles</h2>
+    <div class="saved-articles-grid" id="articlesGrid"></div>
+</main>
+
+<footer>
+    <div class="footer-bottom"><p>&copy; 2024 Digital Platform. All Rights Reserved</p></div>
+</footer>
+
+<script>
+    const BASE = '/Secure_DigitalNewsstand';
+
+    document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        await fetch(`${BASE}/auth/logout`, { method: 'POST', credentials: 'include' });
+        window.location.href = '../Auth/index.html';
+    });
+
+    async function loadArticles() {
+        const params = new URLSearchParams(window.location.search);
+        const categoryId = params.get('categoryId');
+        if (!categoryId) return;
+
+        try {
+            const res = await fetch(`${BASE}/api/articles?categoryId=${categoryId}`, { credentials: 'include' });
+            const articles = await res.json();
+            const grid = document.getElementById('articlesGrid');
+            if (!articles.length) {
+                grid.innerHTML = '<p style="grid-column:1/-1; text-align:center;">No articles in this category yet.</p>';
+                return;
+            }
+
+            grid.innerHTML = articles.map(a => `
+                <div class="article-card" onclick="location.href='article.html?id=${a.id}'" style="cursor:pointer;">
+                    <img src="${a.image || 'https://via.placeholder.com/300x200'}" alt="${a.title}">
+                    <div class="article-content">
+                        <h3>${a.title}</h3>
+                        <p>${a.excerpt}</p>
+                        <div class="article-meta">
+                            <span>${a.author}</span>
+                            <span>${new Date(a.date).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (err) {
+            document.getElementById('articlesGrid').innerHTML = '<p style="text-align:center;">Failed to load articles.</p>';
+        }
+    }
+
+    loadArticles();
+</script>
+</body>
+</html>
