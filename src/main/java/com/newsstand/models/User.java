@@ -10,7 +10,7 @@ public class User {
     private String userName;
     private String userEmail;
     private String userPassword;   // BCrypt hash when loaded from DB
-    private int    userRole;       // FK → role.roleId  (1=admin, 2=regular, 3=premium)
+    private int    userRole;       // FK → role.roleId
     private int    languageId;
 
     // ── Constructors ────────────────────────────────────────────────────────

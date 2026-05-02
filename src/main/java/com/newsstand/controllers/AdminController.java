@@ -18,8 +18,8 @@ import java.util.*;
 /**
  * AdminController — admin-only endpoints for user management.
  *
- * Every handler performs a secondary RBAC check on the specific permission
- * it needs, even though AuthFilter already requires VIEW_ALL_USERS for /api/admin/*.
+ * Every handler performs a secondary RBAC check on the specific permission it needs,
+ * even though AuthFilter already requires VIEW_ALL_USERS for /api/admin/*.
  * This is defence-in-depth: if the filter is ever mis-configured, the
  * controller itself still refuses unauthorised requests.
  *

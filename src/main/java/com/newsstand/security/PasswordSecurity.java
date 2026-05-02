@@ -1,24 +1,7 @@
 package com.newsstand.security;
 
 import org.mindrot.jbcrypt.BCrypt;
-
-/**
- * PasswordSecurity
- * ────────────────────────────────────────────────────────────────────────────
- * Provides salted BCrypt password hashing and verification.
- *
- * WHY BCrypt?
- *  • Each call to hashPassword() generates a fresh cryptographic salt
- *    automatically and embeds it in the resulting hash string.
- *  • BCrypt is intentionally slow (work factor = 2^STRENGTH rounds), making
- *    brute-force and rainbow-table attacks computationally expensive.
- *  • The same plain-text password hashed twice will produce two *different*
- *    hash strings — yet verifyPassword() correctly matches both against the
- *    original plain text.
- *
- * PROJECT EVALUATION CRITERIA MET
- *  ✔ Password Security using Salt and Hashing  (5 pts)
- */
+ // Provides salted BCrypt password hashing and verification
 public class PasswordSecurity {
 
     /**
@@ -43,8 +26,7 @@ public class PasswordSecurity {
             throw new IllegalArgumentException("Password must not be null or empty");
         }
         // BCrypt.gensalt() generates a fresh random salt on every call.
-        // The salt is embedded in the returned hash, so it does NOT need to be
-        // stored separately.
+        // The salt is embedded in the returned hash, so it does NOT need to be stored separately.
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt(STRENGTH));
     }
 

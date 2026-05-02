@@ -12,10 +12,6 @@ import java.util.Set;
  * ────────────────────────────────────────────────────────────────────────────
  * Defines which permissions each role possesses and provides a single
  * authorisation check point used by every servlet/filter.
- *
- * PROJECT EVALUATION CRITERIA MET
- *  ✔ Authorization System – Role-Based Access Control (RBAC)  (5 pts)
- *  ✔ User Permissions Management                              (5 pts)
  */
 public class RBACManager {
 

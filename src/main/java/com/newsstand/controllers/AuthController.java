@@ -24,11 +24,6 @@ import java.util.Map;
  *   POST /auth/logout    – invalidate session
  *   GET  /auth/me        – return current session user info + permissions
  *   PUT  /auth/update    – update own profile (re-hashes new password)
- *
- * PROJECT EVALUATION CRITERIA MET
- *  ✔ User Login System                          (authentication mechanism)
- *  ✔ Password Security using Salt and Hashing
- *  ✔ Authentication Mechanism                   (5 pts)
  */
 @WebServlet("/auth/*")
 public class AuthController extends HttpServlet {

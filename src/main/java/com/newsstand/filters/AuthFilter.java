@@ -30,11 +30,6 @@ import java.util.Map;
  *  • /api/content/premium** → requires READ_PREMIUM_CONTENT permission
  *  • Everything else under  → requires at minimum an active session
  *    /api/** (non-public)
- *
- * PROJECT EVALUATION CRITERIA MET
- *  ✔ Authentication Mechanism                   (5 pts)
- *  ✔ Authorization System – RBAC                (5 pts)
- *  ✔ User Permissions Management                (5 pts)
  */
 @WebFilter("/api/*")          // Intercepts all /api/ routes
 public class AuthFilter implements Filter {
