@@ -8,90 +8,109 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * RBACManager — Role-Based Access Control
- * ────────────────────────────────────────────────────────────────────────────
+ * Role-Based Access Control
+ *
  * Defines which permissions each role possesses and provides a single
  * authorisation check point used by every servlet/filter.
+ *
+ * ROLES CURRENTLY IN THE SYSTEM
+ *   Admin    (1) – system management only (no user‑facing actions)
+ *   Regular  (2) – base user, no subscription
+ *   Basic    (3) – $9/mo  (same base permissions)
+ *   Standard (4) – $19/mo (same base permissions)
+ *   Premium  (5) – $29/mo (extra premium content + subscription management)
  */
 public class RBACManager {
 
-    // ── Permission catalogue ─────────────────────────────────────────────────
-
     public enum Permission {
-        // Content
+        // Content access
         READ_FREE_CONTENT,
         READ_PREMIUM_CONTENT,
+
         // Article management
         CREATE_ARTICLE,
         EDIT_ARTICLE,
         DELETE_ARTICLE,
+
         // User management
         VIEW_ALL_USERS,
         CHANGE_USER_ROLE,
         DELETE_USER,
+
+        // Category management
         MANAGE_CATEGORIES,
-        // Subscription
+
+        // Subscription (for users & admin)
         MANAGE_SUBSCRIPTIONS,
+
         // Feedback
         SUBMIT_FEEDBACK,
         MANAGE_FEEDBACK,
+
         // Profile
         UPDATE_OWN_PROFILE
     }
-
-    // ── Role → Permission mapping ─────────────────────────────────────────────
 
     private static final Map<Role, Set<Permission>> ROLE_PERMISSIONS =
             new EnumMap<>(Role.class);
 
     static {
-        // REGULAR users: read free content, submit feedback, manage own profile
+        // ── Regular (not subscribed) ──────────────────────────────────────
         ROLE_PERMISSIONS.put(Role.REGULAR, EnumSet.of(
-                Permission.READ_FREE_CONTENT,
-                Permission.SUBMIT_FEEDBACK,
-                Permission.UPDATE_OWN_PROFILE
+            Permission.READ_FREE_CONTENT,
+            Permission.SUBMIT_FEEDBACK,
+            Permission.UPDATE_OWN_PROFILE
         ));
 
-        // PREMIUM users: everything REGULAR can do + premium content + subscriptions
+        // ── Basic ─────────────────────────────────────────────────────────
+        ROLE_PERMISSIONS.put(Role.BASIC, EnumSet.of(
+            Permission.READ_FREE_CONTENT,
+            Permission.SUBMIT_FEEDBACK,
+            Permission.UPDATE_OWN_PROFILE
+        ));
+
+        // ── Standard ──────────────────────────────────────────────────────
+        ROLE_PERMISSIONS.put(Role.STANDARD, EnumSet.of(
+            Permission.READ_FREE_CONTENT,
+            Permission.SUBMIT_FEEDBACK,
+            Permission.UPDATE_OWN_PROFILE
+        ));
+
+        // ── Premium ───────────────────────────────────────────────────────
         ROLE_PERMISSIONS.put(Role.PREMIUM, EnumSet.of(
-                Permission.READ_FREE_CONTENT,
-                Permission.READ_PREMIUM_CONTENT,
-                Permission.SUBMIT_FEEDBACK,
-                Permission.UPDATE_OWN_PROFILE,
-                Permission.MANAGE_SUBSCRIPTIONS
+            Permission.READ_FREE_CONTENT,
+            Permission.READ_PREMIUM_CONTENT,
+            Permission.SUBMIT_FEEDBACK,
+            Permission.UPDATE_OWN_PROFILE,
+            Permission.MANAGE_SUBSCRIPTIONS
         ));
 
-        // ADMIN: full access
-        ROLE_PERMISSIONS.put(Role.ADMIN, EnumSet.allOf(Permission.class));
+        // ── Admin (management only – no user‑level permissions) ───────────
+        ROLE_PERMISSIONS.put(Role.ADMIN, EnumSet.of(
+            Permission.CREATE_ARTICLE,
+            Permission.EDIT_ARTICLE,
+            Permission.DELETE_ARTICLE,
+            Permission.VIEW_ALL_USERS,
+            Permission.CHANGE_USER_ROLE,
+            Permission.DELETE_USER,
+            Permission.MANAGE_CATEGORIES,
+            Permission.MANAGE_SUBSCRIPTIONS,
+            Permission.MANAGE_FEEDBACK
+        ));
     }
 
     private RBACManager() { /* utility class */ }
 
-    // ── Public API ────────────────────────────────────────────────────────────
-
-    /**
-     * Checks whether the given role has the required permission.
-     *
-     * @param roleId     the user's roleId (from the database / session)
-     * @param permission the permission being checked
-     * @return true if the role holds the permission
-     */
     public static boolean hasPermission(int roleId, Permission permission) {
         try {
             Role role = Role.fromId(roleId);
             Set<Permission> perms = ROLE_PERMISSIONS.get(role);
             return perms != null && perms.contains(permission);
         } catch (IllegalArgumentException e) {
-            return false; // unknown roleId → deny
+            return false;
         }
     }
 
-    /**
-     * Returns the full set of permissions assigned to a role.
-     *
-     * @param roleId the user's roleId
-     * @return an unmodifiable copy of the permission set
-     */
     public static Set<Permission> getPermissionsForRole(int roleId) {
         try {
             Role role = Role.fromId(roleId);
