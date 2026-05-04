@@ -17,7 +17,8 @@ public class PasswordSecurity {
 
     /**
      * Hashes a plain-text password using BCrypt with an auto-generated salt.
-     *
+    /**  
+    /**
      * @param plainTextPassword the password entered by the user
      * @return a 60-character BCrypt hash that includes the embedded salt
      */
